@@ -1,0 +1,264 @@
+﻿@model List<string>
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["DisplaySearchButtons"] = "false";
+}
+<body>
+    <script src="https://kit.fontawesome.com/bd56d40c7a.js" crossorigin="anonymous"></script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</body>
+
+
+@*line breaks for navigationbar fit*@
+<header>
+    <br />
+    <br />
+    <br />
+</header>
+
+
+
+<div class="text-center">
+    <h1 class="display-4 bigWindow-show">Find et godt navn til din hund!</h1>
+    <br />
+    <h4>
+        Klik på feltet herunder for at vælge søgekriterie
+    </h4>
+</div>
+
+
+@*<<search options buttons>>*@
+<p class="text-center">
+    <button class="btn btn-outline-primary btn-wide dyna-font-big" type="button" id="SearchButton">
+        <i class="far fa-hand-point-up fa-lg float-left" style="color:gray; padding-top:inherit;"></i>
+        @ViewData["SearchCriteria"]
+    </button>
+
+    <a class="btn btn-outline-primary btn-wide dyna-font-big btn-nowebkit" style="display:none;" type="button" id="Hanner" 
+       asp-route-criteria="Hanner" asp-controller="Home" asp-action="Index">
+        <i class="fas fa-mars fa-lg float-left" style="color:gray; padding-top:inherit; "></i>
+        Hanner
+    </a>
+    <a class="btn btn-outline-primary btn-wide dyna-font-big btn-nowebkit" style="display:none;" type="button" id="Taever"
+       asp-route-criteria="Taever" asp-controller="Home" asp-action="Index">
+        <i class="fas fa-venus fa-lg float-left" style="color:gray; padding-top:inherit"></i>
+        Tæver
+    </a>
+    <a class="btn btn-outline-primary btn-wide dyna-font-big btn-nowebkit" style="display:none;" type="button" id="StoreHunde"
+       asp-route-criteria="StoreHunde" asp-controller="Home" asp-action="Index">
+        <i class="fas fa-paw fa-lg float-left" style="color:gray; padding-top:inherit;"></i>
+        Store Hunde
+    </a>
+    <a class="btn btn-outline-primary btn-wide dyna-font-big btn-nowebkit" style="display:none;" type="button" id="SmaeHunde"
+       asp-route-criteria="SmaeHunde" asp-controller="Home" asp-action="Index">
+        <i class="fas fa-paw float-left" style="color:gray; padding-top:inherit;"></i>
+        Små Hunde
+    </a>
+    <a class="btn btn-outline-primary btn-wide dyna-font-big btn-nowebkit" style="display:none;" type="button" id="AlleNavne"
+       asp-controller="Home" asp-action="Index">
+        <i class="fas fa-search float-left" style="color:gray; padding-top:inherit;"></i>
+        Alle Navne
+    </a>
+</p>
+
+
+@Html.Hidden("ShouldDisplay", "no")
+
+@*<<search options click>>*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(function () {
+            $('#SearchButton').click(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                //invert hidden value (yes/no)
+                if (document.getElementById("ShouldDisplay").value == "no") { document.getElementById("ShouldDisplay").value = "yes"; }
+                else { document.getElementById("ShouldDisplay").value = "no"; }
+
+                var shouldDisplay = document.getElementById("ShouldDisplay").value;
+
+                if (shouldDisplay == "yes") {
+                    $('#Hanner').show();
+                    $('#Taever').show();
+                    $('#StoreHunde').show();
+                    $('#SmaeHunde').show();
+                    $('#AlleNavne').show();
+                }
+                else {
+                    $('#Hanner').hide();
+                    $('#Taever').hide();
+                    $('#StoreHunde').hide();
+                    $('#SmaeHunde').hide();
+                    $('#AlleNavne').hide();
+                }
+            });
+        });
+    });
+</script>
+
+
+@*<<anything but search options click>>*@
+<script type="text/javascript">
+
+    $(document).click(function () {
+        if (document.getElementById("ShouldDisplay").value == "yes") {
+            document.getElementById("ShouldDisplay").value = "no";
+            $('#Hanner').hide();
+            $('#Taever').hide();
+            $('#StoreHunde').hide();
+            $('#SmaeHunde').hide();
+            $('#AlleNavne').hide();
+        }
+    });
+</script>
+
+
+
+
+
+@*<<create collumns of names>>*@
+<grid class="container">
+    <div class="row">
+
+
+        <div class="col-2"></div>
+
+        @{
+
+            //<<big view collumns>>
+
+            //first collumn
+            @:<div class="col-2 bigWindow-show">
+            <div class="font-weight-bold">@Model[0][0].ToString().ToUpper()</div>
+        for(int i = 0; i < Model.Count / 4;i++)
+            {
+                <p class="font-weight-normal">@Model[i]</p>
+                if (Model[i+ 1][0].ToString().ToUpper() != Model[i][0].ToString().ToUpper())
+                {
+                    <br />
+        <p class="font-weight-bold">@Model[i + 1][0].ToString().ToUpper()</p>
+                }
+            }
+
+        @:</div>
+
+
+
+        //second collumn
+        @:<div class="col-2 bigWindow-show">
+            for(int i = Model.Count / 4; i < Model.Count / 2;i++)
+            {
+                //adds name line
+                <p class="font-weight-normal">@Model[i]</p>
+
+                if (Model[i + 1][0].ToString().ToUpper() != Model[i][0].ToString().ToUpper())
+                {
+                    //add letter header
+                    <br />
+                    <p class="font-weight-bold ">@Model[i + 1][0].ToString().ToUpper()</p>
+                }
+            }
+        @:</div>
+
+
+
+        //third collumn
+        @:<div class="col-2 bigWindow-show">
+            for(int i = Model.Count / 2; i < Model.Count * 0.75;i++)
+            {
+                //adds name line
+                <p class="font-weight-normal ">@Model[i]</p>
+
+                if (Model[i + 1][0].ToString().ToUpper() != Model[i][0].ToString().ToUpper())
+                {
+                    //add letter header
+                    <br />
+                    <p class="font-weight-bold ">@Model[i + 1][0].ToString().ToUpper()</p>
+                }
+            }
+        @:</div>
+
+
+
+        //fourth collumn
+        @:<div class="col-2 bigWindow-show">
+            for(int i = (int)(Model.Count * 0.75); i < Model.Count;i++)
+            {
+                //adds name line
+                <p class="font-weight-normal ">@Model[i]</p>
+                if (i < Model.Count - 1)
+                    if (Model[i + 1][0].ToString().ToUpper() != Model[i][0].ToString().ToUpper())
+                    {
+                        //add letter header
+                        <br />
+                        <p class="font-weight-bold ">@Model[i + 1][0].ToString().ToUpper()</p>
+                    }
+            }
+        @:</div>
+
+
+
+
+
+
+        //<<small view collumns>>
+
+        //first collumn
+        <div class="col-4 smallWindow-show">
+            <div class="font-weight-bold">@Model[0][0].ToString().ToUpper()</div>
+            @for (int i = 0; i < Model.Count / 2; i++)
+            {
+                <p class="font-weight-normal">@Model[i]</p>
+                if (Model[i + 1][0].ToString().ToUpper() != Model[i][0].ToString().ToUpper())
+                {
+                    <br />
+                    <p class="font-weight-bold">@Model[i + 1][0].ToString().ToUpper()</p>
+                }
+            }
+        </div>
+
+
+
+        //second collumn
+        <div class="col-4 smallWindow-show">
+            @for (int i = Model.Count/ 2; i < Model.Count; i++)
+            {
+                //add name line
+                <p class="font-weight-normal">@Model[i]</p>
+                if (i < Model.Count - 1)
+                    if (Model[i + 1][0].ToString().ToUpper() != Model[i][0].ToString().ToUpper())
+                    {
+                        //add header letter
+                        <br />
+                        <div class="font-weight-bold">@Model[i + 1][0].ToString().ToUpper()</div>
+                    }
+            }
+        </div>
+
+        }
+        <div class="col-2 ">
+        </div>
+        </>
+    </grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

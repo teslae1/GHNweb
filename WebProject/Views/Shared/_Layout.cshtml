@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> GodeHundeNavne </title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://kit.fontawesome.com/bd56d40c7a.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3 nav-custom-sticky ">
+            <div class="navbar-collapse order-1 order-md-0 biggerWindow-show" >
+                <i class="fas fa-dog fa-3x " style="color:white"></i>    
+                <h5 class="" style="color:white;">GodeHundeNavne</h5>
+            </div>
+            <div class="order-3 biggerWindow-show">
+                <h5 class="btn-link" style="color:white;">Dit firmas link her!</h5>
+            </div>
+            <div class="order-1 order-md-0 dogSmall-show">
+                <i class="fas fa-dog fa-3x" style="color:white"></i>
+            </div>
+            <div class="order-3 smallerWindow-show"> 
+                <ul class="nav navbar-nav navbar-right btn-link h5" style="color:white; ">Dit firmas link her!</ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+
